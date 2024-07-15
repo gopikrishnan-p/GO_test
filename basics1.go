@@ -92,35 +92,41 @@
 //     http.HandleFunc("/time", timeHandler)
 //     http.ListenAndServe(":8080", nil)
 // }
-// // 
+// //
 package main
 
 import (
-    "encoding/json"
-    "net/http"
-    "time"
+	"encoding/json"
+	"net/http"
+	"time"
 )
 
 type Response struct {
-    Message string `json:"message"`
+	// Define the struct for the response
+	Message string `json:"message"`
 }
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {
-    if r.Method != http.MethodGet {
-        http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-        return
-    }
-    currentTime := time.Now()
-    formattedTime := currentTime.Format("2006-01-02 15:04:05") 
-    response := Response{
-        Message: "Hello! " + formattedTime,
-    }
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	currentTime := time.Now()
+	// Format the current time
+	formattedTime := currentTime.Format("2006-01-02 15:04:05")
+	println(formattedTime)
+	// Prepare the response
+	response := Response{
+		Message: "Hello! " + formattedTime,
+	}
 
-    w.Header().Set("Content-Type", "application/json")
-    json.NewEncoder(w).Encode(response)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }
 
 func main() {
-    http.HandleFunc("/", handleRequest)
-    http.ListenAndServe(":8080", nil)
+	// Start the server
+	http.HandleFunc("/", handleRequest)
+	// Listen on port 8080
+	http.ListenAndServe(":8080", nil)
 }
