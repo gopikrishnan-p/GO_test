@@ -106,6 +106,13 @@ type Response struct {
 	Message string `json:"message"`
 }
 
+// handleRequest handles an HTTP request and sends a JSON response with the current time.
+//
+// Parameters:
+// - w: http.ResponseWriter - the response writer used to write the response.
+// - r: *http.Request - the request object containing information about the HTTP request.
+//
+// Return type: None.
 func handleRequest(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
